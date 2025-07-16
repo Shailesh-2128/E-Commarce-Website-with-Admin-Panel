@@ -5,57 +5,224 @@
   <title>Payment | OneCart</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #4a6bff;
+      --secondary-color: #f8f9fa;
+      --accent-color: #ff6b6b;
+      --dark-color: #343a40;
+      --light-color: #ffffff;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+    }
+    
+    body {
+      background-color: #f5f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .container {
+      max-width: 800px;
+      background: var(--light-color);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      padding: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    h2 {
+      color: var(--dark-color);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+    
+    .order-items {
+      background: var(--secondary-color);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .order-item:last-child {
+      border-bottom: none;
+    }
+    
+    .payment-method {
+      background: var(--secondary-color);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .payment-option {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid #dee2e6;
+    }
+    
+    .payment-option:hover {
+      background-color: rgba(74, 107, 255, 0.05);
+      border-color: var(--primary-color);
+    }
+    
+    .payment-option.selected {
+      background-color: rgba(74, 107, 255, 0.1);
+      border-color: var(--primary-color);
+    }
+    
+    input[type="radio"] {
+      accent-color: var(--primary-color);
+      margin-right: 15px;
+      transform: scale(1.2);
+    }
+    
+    .payment-icon {
+      font-size: 1.5rem;
+      margin-right: 15px;
+      color: var(--primary-color);
+    }
+    
+    .cod-icon {
+      color: var(--warning-color);
+    }
+    
+    .btn-pay {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+    
+    .btn-razorpay {
+      background-color: var(--primary-color);
+      border: none;
+      color: white;
+    }
+    
+    .btn-razorpay:hover {
+      background-color: #3a56d4;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(74, 107, 255, 0.3);
+    }
+    
+    .btn-cod {
+      background-color: var(--warning-color);
+      border: none;
+      color: var(--dark-color);
+    }
+    
+    .btn-cod:hover {
+      background-color: #e0a800;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+    }
+    
+    .form-check {
+      margin-bottom: 1.5rem;
+      padding-left: 2rem;
+    }
+    
+    .form-check-input {
+      transform: scale(1.2);
+      margin-left: -1.5rem;
+      margin-top: 0.25rem;
+    }
+    
+    .total-amount {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-align: right;
+      margin-top: 1rem;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .payment-method, .order-items {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+  </style>
 </head>
 <body>
   <div class="container py-5">
-    <h2>Payment Details</h2>
+    <h2><i class="fas fa-credit-card me-2"></i>Payment Details</h2>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody id="order-summary"></tbody>
-      <tfoot>
-        <tr>
-          <th colspan="3">Subtotal</th>
-          <td id="subtotal">₹0.00</td>
-        </tr>
-        <tr>
-          <th colspan="3">Shipping</th>
-          <td>₹0.00</td>
-        </tr>
-        <tr>
-          <th colspan="3">Total</th>
-          <td id="total">₹0.00</td>
-        </tr>
-      </tfoot>
-    </table>
-
-    <div class="mb-3">
-      <h5>Select Payment Method</h5>
-      <div>
-        <input type="radio" name="paymentMethod" id="razorpay" checked />
-        <label for="razorpay">Razorpay</label>
+    <div class="order-items">
+      <h5><i class="fas fa-shopping-bag me-2"></i>Your Order</h5>
+      <div id="order-summary"></div>
+      <div class="total-amount">
+        Total: ₹<span id="total">0.00</span>
       </div>
-      <div>
+    </div>
+
+    <div class="payment-method">
+      <h5><i class="fas fa-money-bill-wave me-2"></i>Select Payment Method</h5>
+      <div class="payment-option" onclick="selectPayment('razorpay')">
+        <input type="radio" name="paymentMethod" id="razorpay" checked />
+        <i class="fas fa-rupee-sign payment-icon"></i>
+        <label for="razorpay">Razorpay (Credit/Debit Card, UPI, Net Banking)</label>
+      </div>
+      <div class="payment-option" onclick="selectPayment('cod')">
         <input type="radio" name="paymentMethod" id="cod" />
+        <i class="fas fa-money-bill-wave payment-icon cod-icon"></i>
         <label for="cod">Cash on Delivery</label>
       </div>
     </div>
 
-    <div class="form-check mb-3">
-      <input type="checkbox" class="form-check-input" id="termsCheck" />
-      <label for="termsCheck" class="form-check-label">I agree to the terms</label>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="termsCheck" required />
+      <label for="termsCheck" class="form-check-label">I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">terms and conditions</a></label>
     </div>
 
-    <button class="btn btn-success" onclick="processPayment()">Pay Now</button>
+    <button id="paymentButton" class="btn btn-primary btn-pay btn-razorpay" onclick="processPayment()">
+      <i class="fas fa-lock me-2"></i>Continue to Payment
+    </button>
   </div>
 
+  <!-- Terms Modal -->
+  <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Terms and Conditions</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>By placing your order, you agree to our terms of service and privacy policy. Please ensure all details are correct before proceeding with payment.</p>
+          <p>For Cash on Delivery orders, please have the exact amount ready. Returns and refunds are subject to our return policy.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     let orderData;
 
@@ -63,38 +230,58 @@
       orderData = JSON.parse(sessionStorage.getItem("orderData"));
       if (!orderData) return (window.location.href = "/addToCart");
 
-      const tbody = document.getElementById("order-summary");
-      let subtotal = 0;
+      const orderSummary = document.getElementById("order-summary");
+      
+      // orderData.items.forEach((item) => {
+      //   const itemElement = document.createElement("div");
+      //   itemElement.className = "order-item";
+      //   itemElement.innerHTML = `
+      //     <span>${item.name}</span>
+      //     <span>${item.quantity} × ₹${item.price.toFixed(2)}</span>
+      //   `;
+      //   orderSummary.appendChild(itemElement);
+      // });
 
-      orderData.items.forEach((item) => {
-        const totalItemPrice = item.quantity * item.price;
-        subtotal += totalItemPrice;
-
-        const row = `<tr>
-          <td>${item.name}</td>
-          <td>${item.quantity}</td>
-          <td>₹${item.price.toFixed(2)}</td>
-          <td>₹${totalItemPrice.toFixed(2)}</td>
-        </tr>`;
-
-        tbody.innerHTML += row;
-      });
-
-      document.getElementById("subtotal").textContent = `₹${subtotal.toFixed(2)}`;
-      document.getElementById("total").textContent = `₹${(subtotal).toFixed(2)}`;
+      document.getElementById("total").textContent = orderData.total.toFixed(2);
     });
 
+    function selectPayment(method) {
+      document.getElementById(method).checked = true;
+      const paymentButton = document.getElementById("paymentButton");
+      
+      if (method === "razorpay") {
+        paymentButton.className = "btn btn-primary btn-pay btn-razorpay";
+        paymentButton.innerHTML = '<i class="fas fa-lock me-2"></i>Continue to Payment';
+      } else {
+        paymentButton.className = "btn btn-pay btn-cod";
+        paymentButton.innerHTML = '<i class="fas fa-shopping-bag me-2"></i>Place Order';
+      }
+      
+      // Update selected style
+      document.querySelectorAll('.payment-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      document.querySelector(`input[name="paymentMethod"][id="${method}"]`).parentElement.classList.add('selected');
+    }
+
     function processPayment() {
+      if (!document.getElementById("termsCheck").checked) {
+        alert("Please agree to the terms and conditions");
+        return;
+      }
+
       const method = document.querySelector("input[name='paymentMethod']:checked").id;
       const orderId = 'ord_' + Date.now();
 
       if (method === "razorpay") {
-        // Integrate Razorpay here
-        alert("Mock Razorpay Payment for Order: " + orderId);
-        sessionStorage.clear();
-        window.location.href = "/payment-success.html";
+        // In a real implementation, this would integrate with Razorpay API
+        alert("Redirecting to Razorpay for Order: " + orderId);
+        setTimeout(() => {
+          sessionStorage.clear();
+          window.location.href = "/payment-success.html";
+        }, 1000);
       } else if (method === "cod") {
-        alert("Order placed with Cash on Delivery: " + orderId);
+        alert("Order placed successfully with Cash on Delivery!\nOrder ID: " + orderId);
         sessionStorage.clear();
         window.location.href = "/payment-success.html";
       }
