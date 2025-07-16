@@ -5,14 +5,157 @@
   <title>Secure Checkout | OneCart</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #4a6bff;
+      --secondary-color: #f8f9fa;
+      --accent-color: #ff6b6b;
+      --dark-color: #343a40;
+      --light-color: #ffffff;
+      --success-color: #28a745;
+    }
+    
+    body {
+      background-color: #f5f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .container {
+      max-width: 800px;
+      background: var(--light-color);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      padding: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    h2 {
+      color: var(--dark-color);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+    
+    h5 {
+      color: var(--dark-color);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    
+    .mb-4 {
+      background: var(--secondary-color);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem !important;
+      border-left: 4px solid var(--primary-color);
+      transition: all 0.3s ease;
+    }
+    
+    .mb-4:hover {
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    input[type="radio"] {
+      accent-color: var(--primary-color);
+      margin-right: 10px;
+      transform: scale(1.1);
+    }
+    
+    label {
+      cursor: pointer;
+      font-size: 1rem;
+      color: #495057;
+      transition: color 0.2s;
+    }
+    
+    input[type="radio"]:checked + label {
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    
+    #item-count, #subtotal-amount, #tax-amount, #total-amount {
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+    
+    #total-amount {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    
+    textarea.form-control {
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      resize: none;
+      min-height: 100px;
+      transition: border-color 0.3s;
+    }
+    
+    textarea.form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(74, 107, 255, 0.25);
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      padding: 0.7rem 2rem;
+      border-radius: 8px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      width: 100%;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+    
+    .btn-primary:hover {
+      background-color: #3a56d4;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(74, 107, 255, 0.3);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 576px) {
+      .container {
+        padding: 1.5rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+    
+    /* Animation for sections */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .mb-4 {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    .mb-4:nth-child(2) { animation-delay: 0.1s; }
+    .mb-4:nth-child(3) { animation-delay: 0.2s; }
+    .mb-4:nth-child(4) { animation-delay: 0.3s; }
+    .mb-4:nth-child(5) { animation-delay: 0.4s; }
+  </style>
 </head>
 <body>
   <div class="container py-5">
-    <h2>Checkout</h2>
+    <h2><i class="fas fa-shopping-bag me-2"></i>Secure Checkout</h2>
 
     <div class="mb-4">
-      <h5>Select Address</h5>
-      <div>
+      <h5><i class="fas fa-map-marker-alt me-2"></i>Select Address</h5>
+      <div class="mb-2">
         <input type="radio" name="address" id="address1" checked />
         <label for="address1">123 Main St, Bangalore</label>
       </div>
@@ -23,8 +166,8 @@
     </div>
 
     <div class="mb-4">
-      <h5>Delivery Method</h5>
-      <div>
+      <h5><i class="fas fa-truck me-2"></i>Delivery Method</h5>
+      <div class="mb-2">
         <input type="radio" name="delivery" id="standard" checked />
         <label for="standard">Standard Delivery (Free)</label>
       </div>
@@ -35,18 +178,37 @@
     </div>
 
     <div class="mb-4">
-      <h5>Order Summary</h5>
-      <p>Items: <span id="item-count">0</span></p>
-      <p>Subtotal: ₹<span id="subtotal-amount">0.00</span></p>
-      <p>Tax: ₹<span id="tax-amount">0.00</span></p>
-      <p>Total: ₹<span id="total-amount">0.00</span></p>
+      <h5><i class="fas fa-receipt me-2"></i>Order Summary</h5>
+      <div class="d-flex justify-content-between mb-2">
+        <span>Items:</span>
+        <span id="item-count">0</span>
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <span>Subtotal:</span>
+        <span>₹<span id="subtotal-amount">0.00</span></span>
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <span>Tax:</span>
+        <span>₹<span id="tax-amount">0.00</span></span>
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <span>Delivery Fee:</span>
+        <span>₹<span id="delivery-fee">0.00</span></span>
+      </div>
+      <div class="d-flex justify-content-between mb-2 pt-2 border-top">
+        <span class="fw-bold">Total:</span>
+        <span class="fw-bold">₹<span id="total-amount">0.00</span></span>
+      </div>
     </div>
 
     <div class="mb-4">
-      <textarea class="form-control" placeholder="Order notes..."></textarea>
+      <h5><i class="fas fa-edit me-2"></i>Order Notes</h5>
+      <textarea class="form-control" placeholder="Any special instructions for your order..."></textarea>
     </div>
 
-    <button class="btn btn-primary" onclick="proceedToPayment()">Continue to Payment</button>
+    <button class="btn btn-primary" onclick="proceedToPayment()">
+      <i class="fas fa-lock me-2"></i>Continue to Payment
+    </button>
   </div>
 
   <script>
@@ -56,20 +218,55 @@
       if (!checkoutData) return (window.location.href = "/addToCart");
 
       const itemCount = checkoutData.items.reduce((sum, i) => sum + i.quantity, 0);
+      const expressDeliveryFee = 99;
 
+      // Initialize values
       document.getElementById("item-count").textContent = itemCount;
       document.getElementById("subtotal-amount").textContent = checkoutData.subtotal.toFixed(2);
       document.getElementById("tax-amount").textContent = checkoutData.tax.toFixed(2);
-      document.getElementById("total-amount").textContent = checkoutData.total.toFixed(2);
+      document.getElementById("delivery-fee").textContent = "0.00";
+      
+      // Calculate initial total
+      updateTotal(checkoutData, false);
+
+      // Add event listeners for delivery method changes
+      document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          const isExpress = this.id === 'express';
+          updateTotal(checkoutData, isExpress);
+        });
+      });
     });
+
+    function updateTotal(checkoutData, isExpress) {
+      const deliveryFeeElement = document.getElementById("delivery-fee");
+      const subtotal = parseFloat(checkoutData.subtotal);
+      const tax = parseFloat(checkoutData.tax);
+      const expressDeliveryFee = 99;
+      
+      if (isExpress) {
+        deliveryFeeElement.textContent = expressDeliveryFee.toFixed(2);
+        total = subtotal + tax + expressDeliveryFee;
+      } else {
+        deliveryFeeElement.textContent = "0.00";
+        total = subtotal + tax;
+      }
+      
+      document.getElementById("total-amount").textContent = total.toFixed(2);
+    }
 
     function proceedToPayment() {
       const checkoutData = JSON.parse(sessionStorage.getItem("checkoutData"));
+      const isExpress = document.getElementById("express").checked;
+      const expressDeliveryFee = isExpress ? 99 : 0;
+      
       const orderData = {
         ...checkoutData,
         deliveryAddress: document.querySelector("input[name='address']:checked").id,
         deliveryMethod: document.querySelector("input[name='delivery']:checked").id,
+        deliveryFee: expressDeliveryFee,
         orderNotes: document.querySelector("textarea").value,
+        total: parseFloat(checkoutData.subtotal) + parseFloat(checkoutData.tax) + expressDeliveryFee
       };
 
       sessionStorage.setItem("orderData", JSON.stringify(orderData));
