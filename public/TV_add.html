@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Product Management</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bs-body-bg: #121212;
+            --bs-body-color: #e0e0e0;
+            --bs-dark-bg: #1e1e1e;
+            --bs-dark-border: #333;
+            --bs-primary: #6c757d;
+            --bs-primary-hover: #5a6268;
+        }
+
+        body {
+            background-color: wheat;
+        }
+
+        .form-container {
+            background-color: var(--bs-dark-bg);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--bs-dark-border);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--bs-dark-border);
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .required-field::after {
+            content: " *";
+            color: #dc3545;
+        }
+
+        .btn-submit {
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--bs-primary-hover);
+            border-color: var(--bs-primary-hover);
+        }
+
+        .form-control,
+        .form-select,
+        .form-check-input {
+            background-color: #2d2d2d;
+            color: var(--bs-body-color);
+            border: 1px solid var(--bs-dark-border);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: #3a3a3a;
+            color: white;
+            border-color: #555;
+            box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+        }
+
+        .input-group-text {
+            background-color: #252525;
+            color: var(--bs-body-color);
+            border: 1px solid var(--bs-dark-border);
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2 class="mb-0 fw-bold"><i class="bi bi-tv me-2"></i>TV Product Entry</h2>
+                        <p class="text-muted mt-2">Manage your TV inventory</p>
+                    </div>
+
+                    <form id="tvProductForm" action="/add-tv" method="POST" enctype="multipart/form-data">
+                        <!-- Basic Information Section -->
+                        <div class="mb-4">
+                            <h5 class="mb-3 text-primary">Basic Information</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="title" class="form-label required-field">Product Title</label>
+                                    <input type="text" class="form-control" id="title" name="title" required
+                                        placeholder="e.g., Ultra HD Smart TV">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="brand" class="form-label required-field">Brand</label>
+                                    <input type="text" class="form-control" id="brand" name="brand" required
+                                        placeholder="e.g., Samsung, LG">
+                                </div>
+                                <div class="col-12">
+                                    <label for="description" class="form-label required-field">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3" required
+                                        placeholder="Detailed product description"></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="price" class="form-label required-field">Price ($)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" id="price" name="price" step="0.01"
+                                            min="0" required placeholder="299.99">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select class="form-select" id="category" name="category">
+                                        <option value="" selected disabled>Select category</option>
+                                        <option value="Standard TV">Standard TV</option>
+                                        <option value="Smart TV">Smart TV</option>
+                                        <option value="OLED TV">OLED TV</option>
+                                        <option value="QLED TV">QLED TV</option>
+                                        <option value="Gaming TV">Gaming TV</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="color" class="form-label">Color</label>
+                                    <input type="text" class="form-control" id="color" name="color"
+                                        placeholder="e.g., Black, Silver">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Display Specifications Section -->
+                        <div class="mb-4">
+                            <h5 class="mb-3 text-primary">Display Specifications</h5>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="screen_size" class="form-label required-field">Screen Size</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="screen_size" name="screen_size"
+                                            required placeholder="55">
+                                        <span class="input-group-text">inches</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="screen_type" class="form-label">Screen Type</label>
+                                    <select class="form-select" id="screen_type" name="screen_type">
+                                        <option value="" selected disabled>Select type</option>
+                                        <option value="LED">LED</option>
+                                        <option value="OLED">OLED</option>
+                                        <option value="QLED">QLED</option>
+                                        <option value="MicroLED">MicroLED</option>
+                                        <option value="NanoCell">NanoCell</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="resolution" class="form-label">Resolution</label>
+                                    <select class="form-select" id="resolution" name="resolution">
+                                        <option value="" selected disabled>Select resolution</option>
+                                        <option value="HD">HD (720p)</option>
+                                        <option value="Full HD">Full HD (1080p)</option>
+                                        <option value="4K UHD">4K UHD (2160p)</option>
+                                        <option value="8K UHD">8K UHD (4320p)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Connectivity & Features Section -->
+                        <div class="mb-4">
+                            <h5 class="mb-3 text-primary">Connectivity & Features</h5>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Smart TV</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="smart_tv"
+                                            name="smart_tv" value="1">
+                                        <label class="form-check-label" for="smart_tv">Smart TV Capability</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="hdmi_ports" class="form-label">HDMI Ports</label>
+                                    <input type="number" class="form-control" id="hdmi_ports" name="hdmi_ports" min="0"
+                                        value="3" placeholder="Number of ports">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="usb_ports" class="form-label">USB Ports</label>
+                                    <input type="number" class="form-control" id="usb_ports" name="usb_ports" min="0"
+                                        value="2" placeholder="Number of ports">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="tv_quantity" class="form-label required-field">Quantity</label>
+                            <input type="number" class="form-control" id="tv_quantity" name="quantity" min="0" required>
+                        </div>
+
+
+                        <!-- Additional Information Section -->
+                        <div class="mb-4">
+                            <h5 class="mb-3 text-primary">Additional Information</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="warranty" class="form-label">Warranty</label>
+                                    <input type="text" class="form-control" id="warranty" name="warranty"
+                                        placeholder="e.g., 2 years manufacturer">
+                                </div>
+                                <div class="col-12">
+                                    <label for="more" class="form-label">Technical Specifications</label>
+                                    <textarea class="form-control" id="more" name="more" rows="3"
+                                        placeholder="Additional technical details"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Upload Section -->
+                        <div class="mb-4">
+                            <h5 class="mb-3 text-primary">Product Images</h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="image_path" class="form-label">Main Product Image</label>
+                                    <input class="form-control" type="file" id="image_path" name="image_path"
+                                        accept="image/*">
+                                    <div class="form-text">Upload high-quality product image (JPEG, PNG)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="d-flex justify-content-between mt-5">
+                            <button type="reset" class="btn btn-outline-secondary">Reset Form</button>
+                            <button type="submit" class="btn btn-submit px-4">
+                                <i class="bi bi-save me-2"></i>Save Product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Optional Form Validation Script -->
+    <script>
+        document.getElementById('tvProductForm').addEventListener('submit', function (e) {
+            // Basic client-side validation
+            const title = document.getElementById('title').value;
+            const price = document.getElementById('price').value;
+
+            if (!title || !price) {
+                e.preventDefault();
+                alert('Please fill in all required fields');
+                return false;
+            }
+
+            // Additional validation can be added here
+            return true;
+        });
+    </script>
+</body>
+
+</html>

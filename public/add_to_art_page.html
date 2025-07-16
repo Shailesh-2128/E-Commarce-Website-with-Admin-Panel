@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/add_to_cart.css">
+  
+</head>
+<body>
+  <nav class="sticky-top navbar navbar-expand-lg" style="background-color: #98fbcb;">
+    <div class="container-fluid">
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3" href="#">
+            <i class="fa-solid fa-basket-shopping fa-1x text-black"></i> OneCart
+        </a>
+
+        <!-- Toggle button for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
+            <!-- Search bar -->
+            <form class="d-flex mx-auto w-50" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn-1 liquid-1" type="submit">
+                    <i class="fa-solid fa-magnifying-glass text-black"></i>
+                    <span></span>
+                </button>
+            </form>
+
+            <!-- Menu items -->
+            <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="Electronics.html" target="_blank" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bolt fa-1x"></i> Electronics
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-scroll" style="width: 800px; margin-left: -343%;">
+                        <!-- Your existing electronics dropdown items -->
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-shirt"></i> Fashion
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">mens</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">womens</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">kids</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-carrot"></i> Grocerry
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Personal & Household Care</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Snacks & Beverages</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Fruits & Vegetables</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Dairy & Bakery</a></li>
+                    </ul>
+                </li>
+
+                <!-- Cart button - moved to the right -->
+                <li class="nav-item me-3">
+                    <a href="/addToCart" class="text-decoration-none">
+                        <button type="button" class="btn btn-outline-dark position-relative" id="cart-btn">
+                            <i class="fas fa-shopping-cart me-1"></i> Cart
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
+                                0
+                            </span>
+                        </button>
+                    </a>
+                </li>
+
+                <!-- Improved Login/Profile section -->
+                <li class="nav-item">
+                    <div id="login-btn-container">
+                        <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#loginModal" id="login-btn">
+                            <i class="fas fa-user-circle me-2"></i><b>Login</b>
+                        </button>
+                    </div>
+                    
+                    <div id="profileBtn" class="d-none">
+                        <div class="dropdown">
+                            <button class="btn btn-success dropdown-toggle d-flex align-items-center" 
+                                    data-bs-toggle="dropdown" 
+                                    style="background: linear-gradient(135deg, #28a745, #20c997); border: none;">
+                                <i class="fas fa-user-circle me-2"></i>
+                                <span id="profile-username">Profile</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                                <li><a class="dropdown-item" href="/orders"><i class="fas fa-box me-2"></i>My Orders</a></li>
+                                <li><a class="dropdown-item" href="/wishlist"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+  <div class="container py-4 animate__animated animate__fadeIn">
+    <div class="row">
+      <div class="col-lg-8">
+        <h3 class="mb-4 cart-title">Your Shopping Cart</h3>
+        <div id="cart-items"></div>
+        <div class="d-flex justify-content-between mt-4">
+         <a href="/"> <button class="btn btn-outline-primary continue-btn" onclick="location.href='index.html'">
+            <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+          </button>
+          </a>
+          <button class="btn btn-outline-danger btn-clear" onclick="clearCart()">
+            <i class="fas fa-trash-alt me-2"></i>Clear Cart
+          </button>
+        </div>
+      </div>
+
+      <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="summary-card p-4">
+          <h4 class="mb-4 summary-title">Order Summary</h4>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Subtotal</span>
+            <span>₹<span id="cart-total">0.00</span></span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Shipping</span>
+            <span>FREE</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Tax</span>
+            <span>₹<span id="tax-amount">0.00</span></span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between mb-3">
+            <h5>Total</h5>
+            <h5>₹<span id="total-amount">0.00</span></h5>
+          </div>
+          <button class="btn btn-checkout w-100 pulse" id="checkout-btn">
+            <i class="fas fa-lock me-2"></i>Proceed to Secure Checkout
+          </button>
+          <div class="text-center mt-3">
+            <img src="https://via.placeholder.com/200x30?text=Secure+Payment+Options" alt="Payment Methods" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="notification" class="floating-notification">
+    <i class="fas fa-check-circle me-2"></i>
+    <span id="notification-message">Cart updated successfully!</span>
+  </div>
+
+ 
+  <script src="src/add_to_cart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

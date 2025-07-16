@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneCart Admin Panel</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --orange-primary: #fd7e14;
+            --orange-secondary: #e86100;
+            --orange-light: #ff983b;
+            --orange-bg: #fff5f0;
+            --white: #ffffff;
+            --text-dark: #212529;
+            --text-light: #f8f9fa;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            background-color: var(--orange-bg);
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            position: fixed;
+            height: 100vh;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            background-color: var(--orange-primary);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .sidebar-header h3 {
+            color: var(--white);
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            padding: 0.75rem 1.5rem;
+            margin: 0.25rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: var(--orange-primary);
+            color: var(--white);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background-color: var(--orange-primary);
+            color: var(--white);
+            font-weight: 600;
+            border-radius: 8px 8px 0 0 !important;
+        }
+
+        .btn-orange {
+            background-color: var(--orange-primary);
+            border-color: var(--orange-primary);
+            color: var(--white);
+        }
+
+        .btn-orange:hover {
+            background-color: var(--orange-secondary);
+            border-color: var(--orange-secondary);
+            color: var(--white);
+        }
+
+        .stat-card {
+            background-color: var(--white);
+            border-left: 4px solid var(--orange-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card h5 {
+            color: var(--orange-primary);
+            font-weight: 600;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+
+            .sidebar .nav-link span {
+                display: none;
+            }
+
+            .sidebar .nav-link i {
+                margin-right: 0;
+                font-size: 1.25rem;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+                padding: 0.5rem;
+            }
+
+            .nav-link {
+                min-width: max-content;
+                margin: 0.25rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="bi bi-cart"></i> OneCart Admin</h3>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#dashboard" data-bs-toggle="tab">
+                        <i class="bi bi-speedometer2"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#mobiles" data-bs-toggle="tab">
+                        <i class="bi bi-phone"></i> <span>Add Mobiles</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#tvs" data-bs-toggle="tab">
+                        <i class="bi bi-tv"></i> <span>Add TVs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#fridges" data-bs-toggle="tab">
+                        <i class="bi bi-refrigerator"></i> <span>Add Fridges</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#washingmachines" data-bs-toggle="tab">
+                        <i class="bi bi-thermometer-snow"></i> <span>Add Washing Machines</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#products" data-bs-toggle="tab">
+                        <i class="bi bi-list-ul"></i> <span>View Products</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#settings" data-bs-toggle="tab">
+                        <i class="bi bi-gear"></i> <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="header">
+            <h4 class="mb-0">Admin Dashboard</h4>
+            <div class="user-info">
+                <span class="me-2">Welcome, Admin</span>
+                <button class="btn btn-sm btn-orange">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <!-- Dashboard Tab -->
+            <div class="tab-pane fade show active" id="dashboard">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <h5>Total Products</h5>
+                            <h2>1,248</h2>
+                            <p class="text-muted mb-0"><i class="bi bi-arrow-up text-success"></i> 12% from last month
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <h5>Mobile Phones</h5>
+                            <h2>456</h2>
+                            <p class="text-muted mb-0"><i class="bi bi-arrow-up text-success"></i> 8% from last month
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <h5>Televisions</h5>
+                            <h2>312</h2>
+                            <p class="text-muted mb-0"><i class="bi bi-arrow-up text-success"></i> 15% from last month
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <h5>Appliances</h5>
+                            <h2>480</h2>
+                            <p class="text-muted mb-0"><i class="bi bi-arrow-down text-danger"></i> 3% from last month
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <i class="bi bi-graph-up me-2"></i>Recent Activity
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Action</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#10125</td>
+                                        <td>Samsung Galaxy S23</td>
+                                        <td>Mobile</td>
+                                        <td>Added</td>
+                                        <td>10 mins ago</td>
+                                    </tr>
+                                    <tr>
+                                        <td>#10124</td>
+                                        <td>LG Smart TV 55"</td>
+                                        <td>Television</td>
+                                        <td>Updated</td>
+                                        <td>25 mins ago</td>
+                                    </tr>
+                                    <tr>
+                                        <td>#10123</td>
+                                        <td>Whirlpool Refrigerator</td>
+                                        <td>Fridge</td>
+                                        <td>Added</td>
+                                        <td>1 hour ago</td>
+                                    </tr>
+                                    <tr>
+                                        <td>#10122</td>
+                                        <td>IFB Washing Machine</td>
+                                        <td>Washing Machine</td>
+                                        <td>Updated</td>
+                                        <td>2 hours ago</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Mobiles Tab -->
+            <div class="tab-pane fade" id="mobiles">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-phone me-2"></i>Add New Mobile
+                    </div>
+                    <div class="card-body">
+                        <!-- Mobile form would be loaded here -->
+                        <p class="text-center py-5">Mobile product form would be displayed here</p>
+                        <div class="text-center">
+                            <a href="/add-mobile-form">
+                                <button class="btn btn-orange">
+                                    <i class="bi bi-plus-circle me-2"></i>Add Mobile
+                                </button>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add TVs Tab -->
+            <div class="tab-pane fade" id="tvs">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-tv me-2"></i>Add New Television
+                    </div>
+                    <div class="card-body">
+                        <!-- TV form would be loaded here -->
+                        <p class="text-center py-5">Television product form would be displayed here</p>
+                        <div class="text-center">
+                            <a href="/add-tv-form" target="_blank"> <button class="btn btn-orange">
+                                    <i class="bi bi-plus-circle me-2"></i>Add TV
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Fridges Tab -->
+            <div class="tab-pane fade" id="fridges">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-refrigerator me-2"></i>Add New Refrigerator
+                    </div>
+                    <div class="card-body">
+                        <!-- Fridge form would be loaded here -->
+                        <p class="text-center py-5">Refrigerator product form would be displayed here</p>
+                        <div class="text-center">
+                            <a href="/add-fridge-form"><button class="btn btn-orange">
+                                    <i class="bi bi-plus-circle me-2"></i>Add Fridge
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Washing Machines Tab -->
+            <div class="tab-pane fade" id="washingmachines">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-thermometer-snow me-2"></i>Add New Washing Machine
+                    </div>
+                    <div class="card-body">
+                        <!-- Washing Machine form would be loaded here -->
+                        <p class="text-center py-5">Washing Machine product form would be displayed here</p>
+                        <div class="text-center">
+                            <a href="/add-washing-machine-form"><button class="btn btn-orange">
+                                    <i class="bi bi-plus-circle me-2"></i>Add Washing Machine
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Products Tab -->
+            <div class="tab-pane fade" id="products">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-list-ul me-2"></i>All Products</span>
+                        <div class="input-group" style="width: 300px;">
+                            <input type="text" class="form-control" placeholder="Search products...">
+                            <button class="btn btn-orange" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Image</th>
+                                        <th>Product Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#10125</td>
+                                        <td><img src="https://via.placeholder.com/40" class="rounded" alt="product">
+                                        </td>
+                                        <td>Samsung Galaxy S23</td>
+                                        <td>Mobile</td>
+                                        <td>$899.99</td>
+                                        <td>45</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#10124</td>
+                                        <td><img src="https://via.placeholder.com/40" class="rounded" alt="product">
+                                        </td>
+                                        <td>LG Smart TV 55"</td>
+                                        <td>Television</td>
+                                        <td>$699.99</td>
+                                        <td>12</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#10123</td>
+                                        <td><img src="https://via.placeholder.com/40" class="rounded" alt="product">
+                                        </td>
+                                        <td>Whirlpool Refrigerator</td>
+                                        <td>Fridge</td>
+                                        <td>$1,199.99</td>
+                                        <td>8</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#10122</td>
+                                        <td><img src="https://via.placeholder.com/40" class="rounded" alt="product">
+                                        </td>
+                                        <td>IFB Washing Machine</td>
+                                        <td>Washing Machine</td>
+                                        <td>$549.99</td>
+                                        <td>15</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-pane fade" id="settings">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-gear me-2"></i>Admin Settings
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <h5>Profile Settings</h5>
+                                    <div class="mb-3">
+                                        <label for="adminName" class="form-label">Admin Name</label>
+                                        <input type="text" class="form-control" id="adminName" value="Admin User">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="adminEmail" class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" id="adminEmail"
+                                            value="admin@onecart.com">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Change Password</h5>
+                                    <div class="mb-3">
+                                        <label for="currentPassword" class="form-label">Current Password</label>
+                                        <input type="password" class="form-control" id="currentPassword">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newPassword" class="form-label">New Password</label>
+                                        <input type="password" class="form-control" id="newPassword">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-orange px-4">
+                                    <i class="bi bi-save me-2"></i>Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Activate tab based on URL hash
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.location.hash) {
+                const tabTrigger = new bootstrap.Tab(document.querySelector(`a[href="${window.location.hash}"]`));
+                tabTrigger.show();
+            }
+
+            // Update URL hash when tab changes
+            document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function (e) {
+                    window.location.hash = e.target.getAttribute('href');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>My Project</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter&family=Roboto+Condensed&family=Rubik+Vinyl&family=WDXL+Lubrifont+TC&display=swap"
+        rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+<nav class="sticky-top navbar navbar-expand-lg" style="background-color: #98fbcb;">
+    <div class="container-fluid">
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3" href="#">
+            <i class="fa-solid fa-basket-shopping fa-1x text-black"></i> OneCart
+        </a>
+
+        <!-- Toggle button for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
+            <!-- Search bar -->
+            <form class="d-flex mx-auto w-50" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn-1 liquid-1" type="submit">
+                    <i class="fa-solid fa-magnifying-glass text-black"></i>
+                    <span></span>
+                </button>
+            </form>
+
+            <!-- Menu items -->
+            <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="Electronics.html" target="_blank" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bolt fa-1x"></i> Electronics
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-scroll" style="width: 800px; margin-left: -343%;">
+                        <!-- Your existing electronics dropdown items -->
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-shirt"></i> Fashion
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">mens</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">womens</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">kids</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-carrot"></i> Grocerry
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Personal & Household Care</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Snacks & Beverages</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Fruits & Vegetables</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Dairy & Bakery</a></li>
+                    </ul>
+                </li>
+
+                <!-- Cart button - moved to the right -->
+                <li class="nav-item me-3">
+                    <a href="/addToCart" class="text-decoration-none">
+                        <button type="button" class="btn btn-outline-dark position-relative" id="cart-btn">
+                            <i class="fas fa-shopping-cart me-1"></i> Cart
+                            <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
+                                0
+                            </span> -->
+                        </button>
+                    </a>
+                </li>
+
+
+                <!-- Improved Login/Profile section -->
+                <li class="nav-item">
+                    <div id="login-btn-container">
+                        <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#loginModal" id="login-btn">
+                            <i class="fas fa-user-circle me-2"></i><b>Login</b>
+                        </button>
+                    </div>
+                    
+                    <div id="profileBtn" class="d-none">
+                        <div class="dropdown">
+                            <button class="btn btn-success dropdown-toggle d-flex align-items-center" 
+                                    data-bs-toggle="dropdown" 
+                                    style="background: linear-gradient(135deg, #28a745, #20c997); border: none;">
+                                <i class="fas fa-user-circle me-2"></i>
+                                <span id="profile-username">Profile</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i>My Profile</a></li>
+                                <li><a class="dropdown-item" href="/orders"><i class="fas fa-box me-2"></i>My Orders</a></li>
+                                <li><a class="dropdown-item" href="/wishlist"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
+                <div class="modal-header py-3">
+                    <h5 class="modal-title fw-bold" id="loginModalLabel" style="color: #000;">
+                        <i class="fa-solid fa-basket-shopping fa-1x text-black"></i> Welcome to OneCart
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-0">
+                    <div class="row g-0 align-items-center">
+                        <!-- Left Side -->
+                        <div class="col-md-6 d-none d-md-block p-4 bg-light position-relative">
+                            <div class="floating">
+                                <h2 class="text-dark mb-4 fw-bold">
+                                    Start Shopping<br>
+                                    <span class="text-primary">Smarter</span> with<br>
+                                    <span
+                                        style="background: linear-gradient(to right, #4e54c8, #8f94fb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">OneCart</span>
+                                </h2>
+                                <div class="feature-item mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Fast checkout
+                                </div>
+                                <div class="feature-item mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Secure payments
+                                </div>
+                                <div class="feature-item mb-4">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Personalized recommendations
+                                </div>
+                            </div>
+
+                            <!-- Product showcase -->
+                            <div class="position-relative mt-4">
+                                <div class="product-card shadow-sm position-relative">
+                                    <div class="discount-badge">-30%</div>
+                                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGVhZHBob25lc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                                        class="d-block w-100" alt="Product" style="height: 200px; object-fit: cover;">
+                                    <div class="p-3">
+                                        <h5 class="mb-1">Wireless Headphones</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-danger fw-bold">$89.99</span>
+                                            <span class="text-muted text-decoration-line-through">$129.99</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Side -->
+                        <div class="col-md-6 p-4">
+                            <button class="btn btn-lg w-100 mb-3 shadow-sm" id="google-login-btn">
+                                <i class="fab fa-google me-2"></i><b>Continue with Google</b>
+                            </button>
+
+                            <div class="divider">or login with email</div>
+
+                            <form id="loginForm">
+                                <div id="loginMessage" class="alert d-none" role="alert"></div>
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="emailInput"
+                                        placeholder="name@example.com">
+                                    <label for="emailInput"><i class="fas fa-envelope me-2"></i>Email address</label>
+                                </div>
+                                <div class="form-floating mb-2">
+                                    <input type="password" class="form-control" id="passwordInput"
+                                        placeholder="Password">
+                                    <label for="passwordInput"><i class="fas fa-lock me-2"></i>Password</label>
+                                </div>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                                    </div>
+                                    <a href="#" class="text-decoration-none text-primary">Forgot Password?</a>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100 py-2 shadow"
+                                    style="background: linear-gradient(to bottom, #98fbcb 0%, #00c6fb 100%);">
+                                    <b>Login</b> <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </form>
+
+                            <div class="text-center mt-3">
+                                <p class="text-muted">New to OneCart? <a href="/create-account"
+                                        class="text-primary fw-bold">Create an account</a></p>
+                            </div>
+
+
+                            <div class="d-flex justify-content-center mt-3">
+                                <a href="#" class="text-dark mx-2 social-icon"><i
+                                        class="fab fa-facebook-f fa-lg"></i></a>
+                                <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-twitter fa-lg"></i></a>
+                                <a href="#" class="text-dark mx-2 social-icon"><i
+                                        class="fab fa-instagram fa-lg"></i></a>
+                                <a href="#" class="text-dark mx-2 social-icon"><i
+                                        class="fab fa-pinterest fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 text-center d-block bg-light">
+                    <small class="text-muted">By continuing, you agree to our
+                        <a href="#" class="text-primary">Terms</a>,
+                        <a href="#" class="text-primary">Privacy</a>, and
+                        <a href="#" class="text-primary">Cookie Policy</a>.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../Frontend/images/image.png" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="../Frontend/images/Screenshot 2025-05-30 223455.png" style="height: 562px;"
+                    class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="../Frontend/images/Screenshot 2025-05-30 224737.png" style="height: 562px;"
+                    class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div> -->
+
+    <div class="container-fluid">
+        <p class="text-center mt-4 week-txt" style="font-size: xx-large;"><b>BEST OF ELECTRONICS</b></p>
+    </div>
+
+    <div class="container py-4 py-md-5">
+
+        <div class="row" id="featured-products">
+
+
+        </div>
+
+
+    </div>
+
+    <!-- <p class="text-center mt-4 week-txt" style="font-size: xx-large;"><b>BEST OF FASHIONS</b></p>
+    </div>
+
+    <div class="container py-4 py-md-5">
+
+        <div class="row g-3 g-md-4 ">
+            <!-- TV 1 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class=" badge bg-danger position-absolute" style="top: 10px; right: 10px;">50%</div>
+                    <img src="../Frontend/images/m-1__2_-removebg-preview.png" class="cart-img card-img-top"
+                        alt="Smart TV">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Men Classic Regular Fit Shirt</h5>
+                        <p class="card-text flex-grow-1">ChatGPT said:
+                            The image shows a man wearing a fitted brown button-up shirt with the sleeves rolled up to
+                            the forearms. The shirt has a band collar (Mandarin collar), giving it a modern and
+                            minimalistic look..</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>1,999</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TV 2 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <img src="../Frontend/images/m-2__2_-removebg-preview.png" class="cart-img card-img-top"
+                        alt="OLED TV">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Groovin Premium Oversized T-shirt For Men</h5>
+                        <p class="card-text flex-grow-1">The image shows a man wearing a casual, oversized brown T-shirt
+                            featuring a graphic design of Snoopy driving a jeep. The shirt has the word "GROOVIN’".</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>1,220</span>
+                            <button class="btn btn-success  text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- Fridge -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class=" bg-success position-absolute" style="top: 10px; right: 10px;"></div>
+                    <img src="../Frontend/images/w-1-removebg-preview.png" class="cart-img card-img-top"
+                        alt="Refrigerator">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Women Cotton Schiffli Dress</h5>
+                        <p class="card-text flex-grow-1">The image shows a woman wearing a green, knee-length, tiered
+                            dress with elbow-length puffed sleeves and a V-neckline.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>1,990</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- AC -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-info position-absolute" style="top: 10px; right: 10px;">New</div>
+                    <img src="../Frontend/images/w-2-removebg-preview.png" class="cart-img card-img-top"
+                        alt="Air Conditioner">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Cotton Silk Blend Saree with Unstitched Blouse Piece</h5>
+                        <p class="card-text flex-grow-1">The last image gives a detailed look of the blouse piece that
+                            comes with this saree (The model is wearing a blouse from our in-house wardrobe)</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>5,899</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Banner Section -->
+    <!-- <div class="container mb-5"> 
+        <div class="row">
+            <div class="banner col-12 col-md-6 mb-3">
+                <img class="img-fluid w-100" src="../Frontend/images/Screenshot 2025-06-02 164729.png" alt="">
+            </div>
+            <div class="banner col-12 col-md-6 mb-3">
+                <img class="img-fluid w-100" src="../Frontend/images/Screenshot 2025-06-02 175137.png" alt="">
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Grocery Section -->
+    <!-- <div class="container">
+        <!-- Section Heading -->
+    <!-- <p class="text-center week-txt mb-1" style="font-size: xx-large;"><b>GROCERY</b></p>
+        <h3 class="section-title text-center mb-4">Fresh Vegetables</h3> -->
+
+    <!-- Product Grid -->
+    <!-- <div class="row g-3 g-md-4">
+            <!-- Product 1 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-danger position-absolute" style="top: 10px; right: 10px;"></div>
+                    <img src="../Frontend/images/v-1.png" class="cart-img card-img-top" alt="Organic Spinach">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Organic Spinach</h5>
+                        <p class="card-text flex-grow-1">Fresh, pesticide-free spinach packed with nutrients.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>49/bunch</span>
+                            <button class="btn btn-success text-white pulse-animation">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- Product 2 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-danger position-absolute" style="top: 10px; right: 10px;">sale</div>
+                    <img src="../Frontend/images/v-2.png" class="cart-img card-img-top" alt="Carrots">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Carrots</h5>
+                        <p class="card-text flex-grow-1">Sweet, crunchy carrots grown locally.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>35/250g</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- Product 3 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-info position-absolute" style="top: 10px; right: 10px;"></div>
+                    <img src="../Frontend/images/v-3.png" class="cart-img card-img-top" alt="Broccoli">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Broccoli</h5>
+                        <p class="card-text flex-grow-1">Vitamin-rich broccoli florets, perfect for steaming.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>65/piece</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- Product 4 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-warning position-absolute" style="top: 10px; right: 10px;">Limited</div>
+                    <img src="../Frontend/images/v-4.png" class="cart-img card-img-top" alt="Bell Peppers">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Colorful Bell Peppers</h5>
+                        <p class="card-text flex-grow-1">Assorted colors, sweet and crunchy.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>120/500g</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+
+    <!-- <hr class="section-divider"> -->
+
+    <!-- Fruits Section -->
+    <!-- <h3 class="section-title my-0">Seasonal Fruits</h3>
+        <div class="row g-3 g-md-4 mt-2"> -->
+    <!-- Product 1 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-danger position-absolute" style="top: 10px; right: 10px;"></div>
+                    <img src="../Frontend/images/f-1 (1).png" class="cart-img card-img-top" alt="Organic Apples">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Organic Apples</h5>
+                        <p class="card-text flex-grow-1">Crisp and juicy, perfect for snacking.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>199/kg</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- Product 2 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-success position-absolute" style="top: 10px; right: 10px;"></div>
+                    <img src="../Frontend/images/f-1 (2).png" class="cart-img card-img-top" alt="Bananas">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Ripe Bananas</h5>
+                        <p class="card-text flex-grow-1">Naturally sweet, energy-boosting bananas.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>45/dozen</span>
+                            <button class="btn btn-success text-white pulse-animation">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- Product 3 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-info position-absolute" style="top: 10px; right: 10px;">New</div>
+                    <img src="../Frontend/images/f-1 (3).png" class="cart-img card-img-top" alt="Strawberries">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Strawberries</h5>
+                        <p class="card-text flex-grow-1">Juicy and sweet, perfect for desserts.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>250/box</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- Product 4 -->
+    <!-- <div class="col-12 col-sm-6 col-lg-3">
+                <div class="cart-card card h-100">
+                    <div class="badge bg-warning position-absolute" style="top: 10px; right: 10px;">Limited</div>
+                    <img src="../Frontend/images/f-1 (4).png" class="cart-img card-img-top" alt="Mangoes">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Alphonso Mangoes</h5>
+                        <p class="card-text flex-grow-1">The king of fruits, sweet and fragrant.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="price-tag"><span class="rupee-symbol">₹</span>350/kg</span>
+                            <button class="btn btn-success text-white">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+        <div id="cartToast" class="toast hide align-items-center text-white border-0" role="alert" aria-live="assertive"
+            aria-atomic="true"
+            style="background: linear-gradient(135deg, #4e54c8, #8f94fb); border-radius: 12px; box-shadow: 0 6px 20px rgba(78, 84, 200, 0.3); backdrop-filter: blur(5px);">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center" style="font-size: 1rem; padding: 1rem 1.25rem;">
+                    <div class="me-3" style="font-size: 1.5rem;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div>
+                        <strong style="display: block; margin-bottom: 2px;">Success!</strong>
+                        <span>Product added to cart!</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast"
+                    style="filter: brightness(0) invert(1); opacity: 0.8;"></button>
+            </div>
+            <div class="progress" style="height: 4px; background: rgba(255,255,255,0.2); border-radius: 0 0 12px 12px;">
+                <div class="progress-bar bg-white" role="progressbar"
+                    style="width: 100%; transition: width 0.1s linear;"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class=" text-dark pt-5 pb-4 mt-5" style="background-color: #98fbcb;">
+        <div class="container-fluid text-md-left">
+            <div class="row text-md-left">
+
+                <!-- Logo and About -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-dark">OneCart</h5>
+                    <p>Your one-stop online shop for the best deals on electronics, fashion, home essentials, and more!
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 ">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-dark">Shop</h5>
+                    <p><a href="#" class="text-dark text-decoration-none">Men</a></p>
+                    <p><a href="#" class="text-dark text-decoration-none">Women</a></p>
+                    <p><a href="#" class="text-dark text-decoration-none">Electronics</a></p>
+                    <p><a href="#" class="text-dark text-decoration-none">Home & Kitchen</a></p>
+                </div>
+
+                <!-- Customer Support -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 ">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-dark">Support</h5>
+                    <p><a href="#" class="text-dark text-decoration-none">Help Center</a></p>
+                    <p><a href="#" class="text-dark text-decoration-none">Returns</a></p>
+                    <p><a href="#" class="text-dark text-decoration-none">Shipping</a></p>
+                    <p><a href="#" class="text-dark text-decoration-none">Terms of Service</a></p>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-dark">Contact</h5>
+                    <p><i class="fas fa-home me-3"></i> Mumbai, India</p>
+                    <p><i class="fas fa-envelope me-3"></i> support@onecart.com</p>
+                    <p><i class="fas fa-phone me-3"></i> +91 12345 67890</p>
+                    <p><i class="fas fa-print me-3"></i> +91 98765 43210</p>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="row align-items-center mt-4">
+                <div class="col-md-7 col-lg-8">
+                    <p class="text-dark">© 2025 OneCart. All Rights Reserved.</p>
+                </div>
+
+                <div class="col-md-5 col-lg-4">
+                    <div class="text-center text-md-right">
+                        <a href="#" class="btn m-1" id="icon" style="background-color: #3b5998; color: white;">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn m-1" id="icon" style="background-color: #55acee; color: white;">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn m-1" id="icon" style="background-color: #e4405f; color: white;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="btn m-1" id="icon" style="background-color: #0077b5; color: white;">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+    </footer>
+
+
+
+    <!-- Custom Script -->
+    <script src="src/script.js" defer></script>
+
+    <!-- Bootstrap JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js"
+        integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washing Machine Product Entry</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --gray-primary: #6c757d;
+            --gray-secondary: #495057;
+            --gray-light: #adb5bd;
+            --gray-bg: #f8f9fa;
+            --gray-card: #ffffff;
+            --gray-text: #212529;
+            --gray-border: #dee2e6;
+        }
+
+        body {
+            background-color: var(--gray-bg);
+            color: var(--gray-text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-container {
+            background-color: var(--gray-card);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--gray-border);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gray-primary);
+        }
+
+        .form-header h2 {
+            color: var(--gray-secondary);
+            font-weight: 700;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--gray-secondary);
+        }
+
+        .required-field::after {
+            content: " *";
+            color: var(--gray-primary);
+        }
+
+        .btn-gray {
+            background-color: var(--gray-primary);
+            border-color: var(--gray-primary);
+            color: white;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-gray:hover {
+            background-color: var(--gray-secondary);
+            border-color: var(--gray-secondary);
+            color: white;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid var(--gray-border);
+            transition: all 0.3s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--gray-light);
+            box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+        }
+
+        .input-group-text {
+            background-color: var(--gray-bg);
+            color: var(--gray-secondary);
+            font-weight: 500;
+            border: 1px solid var(--gray-border);
+        }
+
+        .section-header {
+            color: var(--gray-secondary);
+            border-left: 4px solid var(--gray-primary);
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i class="bi bi-thermometer-snow me-2"></i>Add Washing Machine</h2>
+                        <p class="text-muted mt-2">Enter details for your washing machine product</p>
+                    </div>
+
+                    <form id="washingMachineForm" action="/add-washing-machine" method="post"
+                        enctype="multipart/form-data">
+                        <!-- Basic Information -->
+                        <div class="mb-4">
+                            <h5 class="section-header">
+                                <i class="bi bi-info-circle me-2"></i>Basic Information
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="title" class="form-label required-field">Product Title</label>
+                                    <input type="text" class="form-control" id="title" name="title" required
+                                        placeholder="e.g., Front Load Washing Machine">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="brand" class="form-label required-field">Brand</label>
+                                    <input type="text" class="form-control" id="brand" name="brand" required
+                                        placeholder="e.g., LG, Samsung">
+                                </div>
+                                <div class="col-12">
+                                    <label for="description" class="form-label required-field">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3" required
+                                        placeholder="Detailed product description"></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="price" class="form-label required-field">Price ($)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" id="price" name="price" step="0.01"
+                                            min="0" required placeholder="599.99">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="color" class="form-label">Color</label>
+                                    <input type="text" class="form-control" id="color" name="color"
+                                        placeholder="e.g., White, Silver">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select class="form-select" id="category" name="category">
+                                        <option value="" selected disabled>Select category</option>
+                                        <option value="Front Load">Front Load</option>
+                                        <option value="Top Load">Top Load</option>
+                                        <option value="Semi-Automatic">Semi-Automatic</option>
+                                        <option value="Fully Automatic">Fully Automatic</option>
+                                        <option value="Compact">Compact</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Specifications -->
+                        <div class="mb-4">
+                            <h5 class="section-header">
+                                <i class="bi bi-gear me-2"></i>Technical Specifications
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="capacity" class="form-label required-field">Capacity</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="capacity" name="capacity" required
+                                            placeholder="e.g., 8">
+                                        <span class="input-group-text">kg</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="loading_type" class="form-label">Loading Type</label>
+                                    <select class="form-select" id="loading_type" name="loading_type">
+                                        <option value="" selected disabled>Select loading type</option>
+                                        <option value="Front Load">Front Load</option>
+                                        <option value="Top Load">Top Load</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="function_type" class="form-label">Function Type</label>
+                                    <select class="form-select" id="function_type" name="function_type">
+                                        <option value="" selected disabled>Select function type</option>
+                                        <option value="Fully Automatic">Fully Automatic</option>
+                                        <option value="Semi-Automatic">Semi-Automatic</option>
+                                        <option value="Manual">Manual</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="energy_rating" class="form-label">Energy Rating</label>
+                                    <select class="form-select" id="energy_rating" name="energy_rating">
+                                        <option value="" selected disabled>Select rating</option>
+                                        <option value="A+++">A+++</option>
+                                        <option value="A++">A++</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="warranty" class="form-label">Warranty</label>
+                                    <input type="text" class="form-control" id="warranty" name="warranty"
+                                        placeholder="e.g., 2 years">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="wm_quantity" class="form-label required-field">Quantity</label>
+                            <input type="number" class="form-control" id="wm_quantity" name="quantity" min="0" required>
+                        </div>
+                        <!-- Additional Information -->
+                        <div class="mb-4">
+                            <h5 class="section-header">
+                                <i class="bi bi-card-text me-2"></i>Additional Information
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="more" class="form-label">Technical Specifications</label>
+                                    <textarea class="form-control" id="more" name="more" rows="3"
+                                        placeholder="Additional technical details"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="mb-4">
+                            <h5 class="section-header">
+                                <i class="bi bi-image me-2"></i>Product Images
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="image_path" class="form-label">Main Product Image</label>
+                                    <input class="form-control" type="file" id="image_path" name="image_path"
+                                        accept="image/*">
+                                    <div class="form-text">Upload high-quality product image (JPEG, PNG)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="d-flex justify-content-between mt-5">
+                            <button type="reset" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
+                            </button>
+                            <button type="submit" class="btn btn-gray">
+                                <i class="bi bi-save me-2"></i>Save Product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Form Validation Script -->
+    <script>
+        document.getElementById('washingMachineForm').addEventListener('submit', function (e) {
+            const requiredFields = ['title', 'brand', 'description', 'price', 'capacity'];
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (!element.value.trim()) {
+                    element.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    element.classList.remove('is-invalid');
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                // Create and show alert
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.setAttribute('role', 'alert');
+                alertDiv.innerHTML = `
+                    <strong>Error!</strong> Please fill in all required fields.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+
+                const formHeader = document.querySelector('.form-header');
+                formHeader.parentNode.insertBefore(alertDiv, formHeader.nextSibling);
+
+                // Scroll to alert
+                alertDiv.scrollIntoView({ behavior: 'smooth' });
+                return false;
+            }
+
+            return true;
+        });
+    </script>
+</body>
+
+</html>

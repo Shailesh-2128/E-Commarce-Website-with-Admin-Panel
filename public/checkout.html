@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Checkout | OneCart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div class="container py-5">
+    <h2>Checkout</h2>
+
+    <div class="mb-4">
+      <h5>Select Address</h5>
+      <div>
+        <input type="radio" name="address" id="address1" checked />
+        <label for="address1">123 Main St, Bangalore</label>
+      </div>
+      <div>
+        <input type="radio" name="address" id="address2" />
+        <label for="address2">456 Tech Park, Bangalore</label>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <h5>Delivery Method</h5>
+      <div>
+        <input type="radio" name="delivery" id="standard" checked />
+        <label for="standard">Standard Delivery (Free)</label>
+      </div>
+      <div>
+        <input type="radio" name="delivery" id="express" />
+        <label for="express">Express Delivery (₹99)</label>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <h5>Order Summary</h5>
+      <p>Items: <span id="item-count">0</span></p>
+      <p>Subtotal: ₹<span id="subtotal-amount">0.00</span></p>
+      <p>Tax: ₹<span id="tax-amount">0.00</span></p>
+      <p>Total: ₹<span id="total-amount">0.00</span></p>
+    </div>
+
+    <div class="mb-4">
+      <textarea class="form-control" placeholder="Order notes..."></textarea>
+    </div>
+
+    <button class="btn btn-primary" onclick="proceedToPayment()">Continue to Payment</button>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const checkoutData = JSON.parse(sessionStorage.getItem("checkoutData"));
+
+      if (!checkoutData) return (window.location.href = "/addToCart");
+
+      const itemCount = checkoutData.items.reduce((sum, i) => sum + i.quantity, 0);
+
+      document.getElementById("item-count").textContent = itemCount;
+      document.getElementById("subtotal-amount").textContent = checkoutData.subtotal.toFixed(2);
+      document.getElementById("tax-amount").textContent = checkoutData.tax.toFixed(2);
+      document.getElementById("total-amount").textContent = checkoutData.total.toFixed(2);
+    });
+
+    function proceedToPayment() {
+      const checkoutData = JSON.parse(sessionStorage.getItem("checkoutData"));
+      const orderData = {
+        ...checkoutData,
+        deliveryAddress: document.querySelector("input[name='address']:checked").id,
+        deliveryMethod: document.querySelector("input[name='delivery']:checked").id,
+        orderNotes: document.querySelector("textarea").value,
+      };
+
+      sessionStorage.setItem("orderData", JSON.stringify(orderData));
+      window.location.href = "/payment";
+    }
+  </script>
+</body>
+</html>
