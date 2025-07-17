@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OneCart Fashion Page</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+    }
+
+    .hero h1 {
+      font-size: 5rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: bold;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 600;
+      text-align: center;
+      margin: 80px 0 40px;
+    }
+
+    .fashion-card {
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+    }
+
+    .fashion-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .fashion-img {
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .btn-buy {
+      background-color: green;
+      color: white;
+      border-radius: 30px;
+      padding: 10px 25px;
+      font-weight: 500;
+      transition: 0.3s ease;
+    }
+
+    .btn-buy:hover {
+      background-color: #444;
+    }
+
+    footer {
+      background-color: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 30px;
+      margin-top: 100px;
+    }
+
+    /* New styles */
+    .wishlist-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      color: #555;
+      transition: all 0.3s;
+    }
+
+    .wishlist-btn:hover,
+    .wishlist-btn.active {
+      color: red;
+    }
+
+    .wishlist-btn.active {
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-btn {
+      border: 1px solid #ddd;
+      background: white;
+      padding: 8px 20px;
+      border-radius: 30px;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: green;
+      color: white;
+      border-color: green;
+    }
+
+    .modal-img {
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .fashion-img {
+        height: 300px;
+      }
+    }
+  
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class=" sticky-top  navbar navbar-expand-lg" style="background-color: #98fbcb;">
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3" href="index.html">
+                <i class="fa-solid fa-basket-shopping fa-1x text-black"></i> OneCart
+            </a>
+
+            <!-- Toggle button for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar content -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
+                <!-- Search bar -->
+                <form class="d-flex mx-auto w-50" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn-1 liquid-1" type="submit">
+                        <i class="fa-solid fa-magnifying-glass text-black"></i>
+                        <span></span>
+                    </button>
+                </form>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-filter="men">Men</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-filter="women">Women</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-filter="kids">Kids</a>
+          </li>
+          <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="Electronics.html" target="_blank" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-bolt fa-1x"></i> Electronics
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-scroll " style="width: 800px; margin-left: -343%;">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <li><a class="dropdown-item" href="Electronics.html">Laptop</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Smartphone</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Tablet</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Smartwatch</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Headphones</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Earbuds</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Bluetooth Speaker</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Smart TV</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Home Theater</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Desktop PC</a></li>
+                                </div>
+                                <div class="col-md-4">
+                                    <li><a class="dropdown-item" href="Electronics.html">Gaming Console</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">VR Headset</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Drone</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Digital Camera</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">DSLR Camera</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Camcorder</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Printer</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Scanner</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Projector</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Smart Light</a></li>
+                                </div>
+                                <div class="col-md-4">
+                                    <li><a class="dropdown-item" href="Electronics.html">Smart Plug</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">WiFi Router</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Modem</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Power Bank</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Charger</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">USB Cable</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">SSD</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">RAM</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Graphics Card</a></li>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-4">
+                                    <li><a class="dropdown-item" href="Electronics.html">Motherboard</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Processor (CPU)</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Cooling Fan</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Smart Thermostat</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Security Camera</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Video Doorbell</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Fitness Tracker</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Electric Scooter</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">E-bike</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">GPS Device</a></li>
+                                </div>
+                                <div class="col-md-4">
+                                    <li><a class="dropdown-item" href="Electronics.html">Microwave Oven</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Induction Stove</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Air Conditioner</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Refrigerator</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Washing Machine</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Electric Kettle</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Toaster</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Blender</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Coffee Maker</a></li>
+                                    <li><a class="dropdown-item" href="Electronics.html">Vacuum Cleaner</a></li>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+                    
+         
+        </ul>
+        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="grocery.html" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-carrot"></i> Grocerry
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="grocery.html">Personal & Household Care</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="grocery.html">Snacks & Beverages</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="grocery.html">Fruits & Vegetables</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="grocery.html">Dairy & Bakery</a></li>
+
+                        </ul>
+                    </li>
+        <li>
+         <a class="nav-link " href="help.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-headset"></i> Help
+          </a>
+          </li>
+        <div class="d-flex">
+          <button class="btn btn-outline-dark me-2 position-relative" id="wishlistBtn">
+            <i class="fas fa-heart"></i>
+            <span class="cart-count" id="wishlistCount">0</span>
+          </button>
+          <button class="btn btn-outline-dark position-relative" id="cartBtn">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+
+          </button>
+        </div>
+
+      </div>
+      
+    </div>
+    
+
+  </nav>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero text-center py-5 animate__animated animate__fadeIn">
+      <h1 class="mb-4">Fashion for Everyone</h1>
+      <p class="lead mb-4">Discover the latest trends in clothing for men, women and kids</p>
+
+      <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="men">Men</button>
+        <button class="filter-btn" data-filter="women">Women</button>
+        <button class="filter-btn" data-filter="kids">Kids</button>
+        <button class="filter-btn" data-filter="price-low">Under ₹1000</button>
+        <button class="filter-btn" data-filter="price-high">Above ₹2000</button>
+      </div>
+    </div>
+
+    <!-- MEN SECTION -->
+    <h2 class="section-title" id="men-section">Men's Fashion</h2>
+    <div class="row g-4 product-container" data-category="men">
+      <!-- 4 men items -->
+      <div class="col-md-3 product-item" data-price="999">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/n-3.png"
+            class="fashion-img card-img-top" alt="T-Shirt">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Black T-Shirt</h5>
+            <p class="price">₹999</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="1499">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/n-2.png"
+            class="fashion-img card-img-top" alt="Shirt">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>White Shirt</h5>
+            <p class="price">₹1,499</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="2599">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/n-1 (3).png"
+            class="fashion-img card-img-top" alt="Jacket">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Winter Jacket</h5>
+            <p class="price">₹2,599</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="1199">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/n-1 (1).png"
+            class="fashion-img card-img-top" alt="Hoodie">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Casual Hoodie</h5>
+            <p class="price">₹1,199</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WOMEN SECTION -->
+    <h2 class="section-title" id="women-section">Women's Fashion</h2>
+    <div class="row g-4 product-container" data-category="women">
+      <!-- 4 women items -->
+      <div class="col-md-3 product-item" data-price="2199">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/fw-1 (3).png"
+            class="fashion-img card-img-top" alt="Dress">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Floral Dress</h5>
+            <p class="price">₹2,199</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="3999">
+        <div class="card fashion-card">
+          <img
+            src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/fw-1__2_-removebg-preview.png"
+            class="fashion-img card-img-top" alt="Saree">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Silk Saree</h5>
+            <p class="price">₹3,999</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="899">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/fw-1 (1).png"
+            class="fashion-img card-img-top" alt="Top">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Printed Top</h5>
+            <p class="price">₹899</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="2799">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/fw-2.png"
+            class="fashion-img card-img-top" alt="Jacket">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Stylish Jacket</h5>
+            <p class="price">₹2,799</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KIDS SECTION -->
+    <h2 class="section-title" id="kids-section">Kids Fashion</h2>
+    <div class="row g-4 mb-5 product-container" data-category="kids">
+      <!-- 4 kids items -->
+      <div class="col-md-3 product-item" data-price="499">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/k-1 (4).png"
+            class="fashion-img card-img-top" alt="Kids Tee">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Cartoon T-Shirt</h5>
+            <p class="price">₹499</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="799">
+        <div class="card fashion-card">
+          <img src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/k-1 (1).png"
+            class="fashion-img card-img-top" alt="Kids Dress">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Floral Dress</h5>
+            <p class="price">₹799</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="999">
+        <div class="card fashion-card">
+          <img
+            src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/k-1__2_-removebg-preview.png"
+            class="fashion-img card-img-top" alt="Kids Jacket">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Mini Jacket</h5>
+            <p class="price">₹999</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 product-item" data-price="699">
+        <div class="card fashion-card">
+          <img id="bb" src="/oneCart_project_/Onecart---E-commarce-website/oneCart_project/Frontend/images/k-1 (3).png"
+            class="fashion-img card-img-top" alt="Baby Wear">
+          <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+          <div class="card-body text-center">
+            <h5>Baby Romper</h5>
+            <p class="price">₹699</p>
+            <button class="btn btn-buy">Buy Now</button>
+            <button class="btn btn-outline-secondary mt-2 btn-sm btn-details">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Modal -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalProductTitle">Product Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <img src="" class="img-fluid modal-img" id="modalProductImage" alt="Product Image">
+            </div>
+            <div class="col-md-6">
+              <h3 id="modalProductName"></h3>
+              <p class="price mb-3" id="modalProductPrice"></p>
+              <p id="modalProductDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor,
+                nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.</p>
+              <div class="mb-3">
+                <label class="form-label">Size:</label>
+                <div class="btn-group" role="group">
+                  <input type="radio" class="btn-check" name="size" id="sizeS" autocomplete="off" checked>
+                  <label class="btn btn-outline-secondary" for="sizeS">S</label>
+
+                  <input type="radio" class="btn-check" name="size" id="sizeM" autocomplete="off">
+                  <label class="btn btn-outline-secondary" for="sizeM">M</label>
+
+                  <input type="radio" class="btn-check" name="size" id="sizeL" autocomplete="off">
+                  <label class="btn btn-outline-secondary" for="sizeL">L</label>
+
+                  <input type="radio" class="btn-check" name="size" id="sizeXL" autocomplete="off">
+                  <label class="btn btn-outline-secondary" for="sizeXL">XL</label>
+                </div>
+              </div>
+              <div class="d-flex gap-3 mb-4">
+                <div class="input-group" style="width: 120px;">
+                  <button class="btn btn-outline-secondary" type="button" id="quantityMinus">-</button>
+                  <input type="number" class="form-control text-center" value="1" min="1" id="quantityInput">
+                  <button class="btn btn-outline-secondary" type="button" id="quantityPlus">+</button>
+                </div>
+                <button class="btn btn-success flex-grow-1" id="modalAddToCart">Add to Cart</button>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-danger flex-grow-1" id="modalAddToWishlist">
+                  <i class="far fa-heart me-2"></i>Add to Wishlist
+                </button>
+                <button class="btn btn-outline-secondary">
+                  <i class="fas fa-share-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Your Cart (<span id="cartItemCount">0</span>)</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="cartItemsContainer">
+        <p class="text-muted">Your cart is empty</p>
+      </div>
+      <div class="border-top pt-3 mt-3">
+        <div class="d-flex justify-content-between mb-2">
+          <span>Subtotal:</span>
+          <span id="cartSubtotal">₹0</span>
+        </div>
+        <div class="d-flex justify-content-between mb-3">
+          <span>Shipping:</span>
+          <span>FREE</span>
+        </div>
+        <div class="d-flex justify-content-between fw-bold fs-5">
+          <span>Total:</span>
+          <span id="cartTotal">₹0</span>
+        </div>
+        
+       <a href="payment_page.html"> <button class="btn btn-success w-100 mt-3" disabled id="checkoutBtn">Proceed to Checkout</button></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Sidebar -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="wishlistOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Your Wishlist (<span id="wishlistItemCount">0</span>)</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="wishlistItemsContainer">
+        <p class="text-muted">Your wishlist is empty</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+
+  <footer class=" text-dark pt-5 pb-4 mt-5" style="background-color: #98fbcb;">
+    <div class="container-fluid text-md-left">
+      <div class="row text-md-left">
+
+        <!-- Logo and About -->
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-dark">OneCart</h5>
+          <p>Your one-stop online shop for the best deals on electronics, fashion, home essentials, and more!
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3 ">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-dark">Shop</h5>
+          <p><a href="#" class="text-dark text-decoration-none">Men</a></p>
+          <p><a href="#" class="text-dark text-decoration-none">Women</a></p>
+          <p><a href="#" class="text-dark text-decoration-none">Electronics</a></p>
+          <p><a href="#" class="text-dark text-decoration-none">Home & Kitchen</a></p>
+        </div>
+
+        <!-- Customer Support -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3 ">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-dark">Support</h5>
+          <p><a href="#" class="text-dark text-decoration-none">Help Center</a></p>
+          <p><a href="#" class="text-dark text-decoration-none">Returns</a></p>
+          <p><a href="#" class="text-dark text-decoration-none">Shipping</a></p>
+          <p><a href="#" class="text-dark text-decoration-none">Terms of Service</a></p>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-dark">Contact</h5>
+          <p><i class="fas fa-home me-3"></i> Mumbai, India</p>
+          <p><i class="fas fa-envelope me-3"></i> support@onecart.com</p>
+          <p><i class="fas fa-phone me-3"></i> +91 12345 67890</p>
+          <p><i class="fas fa-print me-3"></i> +91 98765 43210</p>
+        </div>
+      </div>
+
+      <!-- Social Media -->
+      <div class="row align-items-center mt-4">
+        <div class="col-md-7 col-lg-8">
+          <p class="text-dark">© 2025 OneCart. All Rights Reserved.</p>
+        </div>
+
+        <div class="col-md-5 col-lg-4">
+          <div class="text-center text-md-right">
+            <a href="#" class="btn m-1" id="icon" style="background-color: #3b5998; color: white;">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="btn m-1" id="icon" style="background-color: #55acee; color: white;">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="btn m-1" id="icon" style="background-color: #e4405f; color: white;">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="btn m-1" id="icon" style="background-color: #0077b5; color: white;">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize cart and wishlist
+      let cart = [];
+      let wishlist = [];
+
+      // DOM elements
+      const cartCountEl = document.getElementById('cartCount');
+      const wishlistCountEl = document.getElementById('wishlistCount');
+      const cartBtn = document.getElementById('cartBtn');
+      const wishlistBtn = document.getElementById('wishlistBtn');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const productItems = document.querySelectorAll('.product-item');
+      const productContainers = document.querySelectorAll('.product-container');
+      const buyBtns = document.querySelectorAll('.btn-buy');
+      const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+      const detailBtns = document.querySelectorAll('.btn-details');
+      const cartOffcanvas = new bootstrap.Offcanvas(document.getElementById('cartOffcanvas'));
+      const wishlistOffcanvas = new bootstrap.Offcanvas(document.getElementById('wishlistOffcanvas'));
+      const productModal = new bootstrap.Modal(document.getElementById('productModal'));
+
+      // Filter products
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const filter = this.dataset.filter;
+
+          // Update active button
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+
+          // Filter products
+          productItems.forEach(item => {
+            const price = parseInt(item.dataset.price);
+            const category = item.parentElement.dataset.category;
+
+            let showItem = true;
+
+            if (filter === 'all') {
+              showItem = true;
+            } else if (filter === 'men' || filter === 'women' || filter === 'kids') {
+              showItem = category === filter;
+            } else if (filter === 'price-low') {
+              showItem = price < 1000;
+            } else if (filter === 'price-high') {
+              showItem = price > 2000;
+            }
+
+            item.style.display = showItem ? 'block' : 'none';
+          });
+
+          // Scroll to appropriate section
+          if (filter === 'men') {
+            document.getElementById('men-section').scrollIntoView({ behavior: 'smooth' });
+          } else if (filter === 'women') {
+            document.getElementById('women-section').scrollIntoView({ behavior: 'smooth' });
+          } else if (filter === 'kids') {
+            document.getElementById('kids-section').scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Navbar filter links
+      document.querySelectorAll('.nav-link[data-filter]').forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const filter = this.dataset.filter;
+          document.querySelector(`.filter-btn[data-filter="${filter}"]`).click();
+        });
+      });
+
+      // Buy button click
+      buyBtns.forEach((btn, index) => {
+        btn.addEventListener('click', function () {
+          const card = this.closest('.card');
+          const productName = card.querySelector('h5').textContent;
+          const productPrice = parseInt(card.querySelector('.price').textContent.replace(/[^0-9]/g, ''));
+          const productImg = card.querySelector('img').src;
+
+          addToCart(productName, productPrice, productImg);
+        });
+      });
+
+      // Wishlist button click
+      wishlistBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const card = this.closest('.card');
+          const productName = card.querySelector('h5').textContent;
+          const productPrice = parseInt(card.querySelector('.price').textContent.replace(/[^0-9]/g, ''));
+          const productImg = card.querySelector('img').src;
+
+          if (this.classList.contains('active')) {
+            removeFromWishlist(productName);
+            this.innerHTML = '<i class="far fa-heart"></i>';
+            this.classList.remove('active');
+          } else {
+            addToWishlist(productName, productPrice, productImg);
+            this.innerHTML = '<i class="fas fa-heart"></i>';
+            this.classList.add('active');
+          }
+        });
+      });
+
+      // Details button click
+      detailBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const card = this.closest('.card');
+          const productName = card.querySelector('h5').textContent;
+          const productPrice = card.querySelector('.price').textContent;
+          const productImg = card.querySelector('img').src;
+
+          // Set modal content
+          document.getElementById('modalProductTitle').textContent = productName;
+          document.getElementById('modalProductName').textContent = productName;
+          document.getElementById('modalProductPrice').textContent = productPrice;
+          document.getElementById('modalProductImage').src = productImg;
+
+          // Show modal
+          productModal.show();
+        });
+      });
+
+      // Modal add to cart
+      document.getElementById('modalAddToCart').addEventListener('click', function () {
+        const productName = document.getElementById('modalProductName').textContent;
+        const productPrice = parseInt(document.getElementById('modalProductPrice').textContent.replace(/[^0-9]/g, ''));
+        const productImg = document.getElementById('modalProductImage').src;
+        const quantity = parseInt(document.getElementById('quantityInput').value);
+
+        for (let i = 0; i < quantity; i++) {
+          addToCart(productName, productPrice, productImg);
+        }
+
+        productModal.hide();
+      });
+
+      // Modal add to wishlist
+      document.getElementById('modalAddToWishlist').addEventListener('click', function () {
+        const productName = document.getElementById('modalProductName').textContent;
+        const productPrice = parseInt(document.getElementById('modalProductPrice').textContent.replace(/[^0-9]/g, ''));
+        const productImg = document.getElementById('modalProductImage').src;
+
+        if (this.classList.contains('active')) {
+          removeFromWishlist(productName);
+          this.innerHTML = '<i class="far fa-heart me-2"></i>Add to Wishlist';
+          this.classList.remove('active');
+        } else {
+          addToWishlist(productName, productPrice, productImg);
+          this.innerHTML = '<i class="fas fa-heart me-2"></i>Added to Wishlist';
+          this.classList.add('active');
+        }
+      });
+
+      // Quantity controls
+      document.getElementById('quantityPlus').addEventListener('click', function () {
+        const input = document.getElementById('quantityInput');
+        input.value = parseInt(input.value) + 1;
+      });
+
+      document.getElementById('quantityMinus').addEventListener('click', function () {
+        const input = document.getElementById('quantityInput');
+        if (parseInt(input.value) > 1) {
+          input.value = parseInt(input.value) - 1;
+        }
+      });
+
+      // Cart button click
+      cartBtn.addEventListener('click', function () {
+        updateCartUI();
+        cartOffcanvas.show();
+      });
+
+      // Wishlist button click
+      wishlistBtn.addEventListener('click', function () {
+        updateWishlistUI();
+        wishlistOffcanvas.show();
+      });
+
+      // Add to cart function
+      function addToCart(name, price, image) {
+        cart.push({ name, price, image });
+        updateCartCount();
+
+        // Show success message
+        const toast = document.createElement('div');
+        toast.className = 'position-fixed bottom-0 end-0 p-3';
+        toast.style.zIndex = '11';
+        toast.innerHTML = `
+          <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success text-white">
+              <strong class="me-auto">Success</strong>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              ${name} added to cart!
+            </div>
+          </div>
+        `;
+        document.body.appendChild(toast);
+
+        // Remove toast after 3 seconds
+        setTimeout(() => {
+          toast.remove();
+        }, 3000);
+      }
+
+      // Add to wishlist function
+      function addToWishlist(name, price, image) {
+        wishlist.push({ name, price, image });
+        updateWishlistCount();
+      }
+
+      // Remove from wishlist function
+      function removeFromWishlist(name) {
+        wishlist = wishlist.filter(item => item.name !== name);
+        updateWishlistCount();
+      }
+
+      // Update cart count
+      function updateCartCount() {
+        cartCountEl.textContent = cart.length;
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+
+      // Update wishlist count
+      function updateWishlistCount() {
+        wishlistCountEl.textContent = wishlist.length;
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      }
+
+      // Update cart UI
+      function updateCartUI() {
+        const container = document.getElementById('cartItemsContainer');
+        const itemCountEl = document.getElementById('cartItemCount');
+        const subtotalEl = document.getElementById('cartSubtotal');
+        const totalEl = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        if (cart.length === 0) {
+          container.innerHTML = '<p class="text-muted">Your cart is empty</p>';
+          itemCountEl.textContent = '0';
+          subtotalEl.textContent = '₹0';
+          totalEl.textContent = '₹0';
+          checkoutBtn.disabled = true;
+          return;
+        }
+
+        let html = '';
+        let subtotal = 0;
+
+        cart.forEach(item => {
+          subtotal += item.price;
+          html += `
+            <div class="d-flex mb-3 pb-3 border-bottom">
+              <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
+              <div class="ms-3 flex-grow-1">
+                <h6 class="mb-1">${item.name}</h6>
+                <p class="text-muted mb-1">₹${item.price}</p>
+                <button class="btn btn-sm btn-outline-danger remove-from-cart" data-name="${item.name}">Remove</button>
+              </div>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+        itemCountEl.textContent = cart.length;
+        subtotalEl.textContent = `₹${subtotal}`;
+        totalEl.textContent = `₹${subtotal}`;
+        checkoutBtn.disabled = false;
+
+        // Add event listeners to remove buttons
+        document.querySelectorAll('.remove-from-cart').forEach(btn => {
+          btn.addEventListener('click', function () {
+            const name = this.dataset.name;
+            cart = cart.filter(item => item.name !== name);
+            updateCartCount();
+            updateCartUI();
+          });
+        });
+      }
+
+      // Update wishlist UI
+      function updateWishlistUI() {
+        const container = document.getElementById('wishlistItemsContainer');
+        const itemCountEl = document.getElementById('wishlistItemCount');
+
+        if (wishlist.length === 0) {
+          container.innerHTML = '<p class="text-muted">Your wishlist is empty</p>';
+          itemCountEl.textContent = '0';
+          return;
+        }
+
+        let html = '';
+
+        wishlist.forEach(item => {
+          html += `
+            <div class="d-flex mb-3 pb-3 border-bottom">
+              <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
+              <div class="ms-3 flex-grow-1">
+                <h6 class="mb-1">${item.name}</h6>
+                <p class="text-muted mb-1">₹${item.price}</p>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-success add-to-cart-from-wishlist" data-name="${item.name}" data-price="${item.price}" data-image="${item.image}">Add to Cart</button>
+                  <button class="btn btn-sm btn-outline-danger remove-from-wishlist" data-name="${item.name}">Remove</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+        itemCountEl.textContent = wishlist.length;
+
+        // Add event listeners to remove buttons
+        document.querySelectorAll('.remove-from-wishlist').forEach(btn => {
+          btn.addEventListener('click', function () {
+            const name = this.dataset.name;
+            removeFromWishlist(name);
+            updateWishlistUI();
+
+            // Also update the wishlist button in the product card
+            document.querySelectorAll('.wishlist-btn').forEach(wishlistBtn => {
+              const cardName = wishlistBtn.closest('.card').querySelector('h5').textContent;
+              if (cardName === name) {
+                wishlistBtn.innerHTML = '<i class="far fa-heart"></i>';
+                wishlistBtn.classList.remove('active');
+              }
+            });
+          });
+        });
+
+        // Add event listeners to add to cart buttons
+        document.querySelectorAll('.add-to-cart-from-wishlist').forEach(btn => {
+          btn.addEventListener('click', function () {
+            const name = this.dataset.name;
+            const price = parseInt(this.dataset.price);
+            const image = this.dataset.image;
+
+            addToCart(name, price, image);
+            updateCartUI();
+          });
+        });
+      }
+
+      // Load cart and wishlist from localStorage
+      function loadFromLocalStorage() {
+        const savedCart = localStorage.getItem('cart');
+        const savedWishlist = localStorage.getItem('wishlist');
+
+        if (savedCart) {
+          cart = JSON.parse(savedCart);
+          updateCartCount();
+        }
+
+        if (savedWishlist) {
+          wishlist = JSON.parse(savedWishlist);
+          updateWishlistCount();
+
+          // Mark wishlisted items
+          wishlist.forEach(item => {
+            document.querySelectorAll('.wishlist-btn').forEach(btn => {
+              const cardName = btn.closest('.card').querySelector('h5').textContent;
+              if (cardName === item.name) {
+                btn.innerHTML = '<i class="fas fa-heart"></i>';
+                btn.classList.add('active');
+              }
+            });
+          });
+        }
+      }
+
+      // Initialize
+      loadFromLocalStorage();
+    });
+  </script>
+</body>
+
+</html>
