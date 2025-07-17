@@ -267,18 +267,91 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.get('/api/search', (req, res) => {
+  const searchTerm = req.query.q || req.query.query; // Support both 'q' and 'query' parameters
+  if (!searchTerm || searchTerm.trim().length < 2) {
+    return res.status(400).json({ 
+      error: 'Search term must be at least 2 characters long' 
+    });
+  }
 
+  const searchQuery = `
+    SELECT 
+      'mobiles' AS category, 
+      id, 
+      title AS name, 
+      price, 
+      image_path AS image,
+      CONCAT('mobiles') AS product_route
+    FROM mobiles 
+    WHERE title LIKE ? OR description LIKE ?
+    
+    UNION
+    
+    SELECT 
+      'tvs' AS category, 
+      id, 
+      title AS name, 
+      price, 
+      image_path AS image,
+      CONCAT('tvs') AS product_route
+    FROM tvs 
+    WHERE title LIKE ? OR description LIKE ?
+    
+    UNION
+    
+    SELECT 
+      'fridges' AS category, 
+      id, 
+      title AS name, 
+      price, 
+      image_path AS image,
+      CONCAT('fridges') AS product_route
+    FROM fridges 
+    WHERE title LIKE ? OR description LIKE ?
+    
+    UNION
+    
+    SELECT 
+      'washing_machines' AS category, 
+      id, 
+      title AS name, 
+      price, 
+      image_path AS image,
+      CONCAT('washing-machines') AS product_route
+    FROM washing_machines 
+    WHERE title LIKE ? OR description LIKE ?
+    
+    ORDER BY name ASC
+    LIMIT 10
+  `;
 
+  const searchValue = `%${searchTerm}%`;
+  const queryParams = Array(8).fill(searchValue); // 8 placeholders in the query
 
+  db.query(searchQuery, queryParams, (err, results) => {
+    if (err) {
+      console.error('Search error:', err);
+      return res.status(500).json({ 
+        error: 'Search failed', 
+        details: err.message 
+      });
+    }
 
+    // Transform results for better frontend consumption
+    const transformedResults = results.map(item => ({
+      ...item,
+      formattedPrice: `₹${item.price.toFixed(2)}`,
+      productUrl: `/products/${item.product_route}/${item.id}`
+    }));
 
-
-
-
-
-
-
-
+    res.json({
+      success: true,
+      count: transformedResults.length,
+      results: transformedResults
+    });
+  });
+});
 
 // Start server
 app.listen(3000, () => {

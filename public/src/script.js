@@ -171,9 +171,9 @@ if (user && user.name) {
   document.querySelector('#profileBtn .dropdown-toggle').textContent = `👤 ${user.name}`;
 }
 
-localStorage.setItem('isLoggedIn', 'true');
-localStorage.setItem('user', JSON.stringify(userData)); // Store user data if needed
-updateNavbarState(true); // Update UI immediately
+// localStorage.setItem('isLoggedIn', 'true');
+// localStorage.setItem('user', JSON.stringify(userData)); // Store user data if needed
+// updateNavbarState(true); // Update UI immediately
 
 
 
@@ -197,11 +197,11 @@ function showCartFeedback() {
   }, 1500);
 }
 // Initialize cart count on page load
-document.addEventListener('DOMContentLoaded', function() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const total = cart.reduce((sum, item) => sum + item.quantity, 0);
-  document.getElementById('cart-count').textContent = total;
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//   const cart = JSON.parse(localStorage.getItem('cart')) || [];
+//   const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+//   document.getElementById('cart-count').textContent = total;
+// });
 
 function updateNavbar() {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -217,3 +217,118 @@ function updateNavbar() {
     if (profileBtn) profileBtn.classList.add("d-none");
   }
 } // Call to update navbar state
+
+let currentFocus = -1;
+
+function searchProducts() {
+    const input = document.getElementById('searchBox');
+    const val = input.value.trim();
+    const resultsContainer = document.getElementById('searchResultsList');
+    const dropdown = document.getElementById('searchResults');
+    
+    if (val.length < 2) {
+        dropdown.style.display = 'none';
+        return;
+    }
+    
+    // Simulate API call (replace with actual fetch)
+    fetch(`/api/search?q=${encodeURIComponent(val)}`)
+        .then(response => response.json())
+        .then(products => {
+            resultsContainer.innerHTML = '';
+            
+            if (products.length === 0) {
+                resultsContainer.innerHTML = '<div class="no-results">No products found</div>';
+                dropdown.style.display = 'block';
+                return;
+            }
+            
+            products.forEach((product, index) => {
+                const item = document.createElement('div');
+                item.className = 'search-result-item';
+                item.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <img src="${product.image || 'placeholder.jpg'}" alt="${product.name}" 
+                             style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
+                        <div>
+                            <h6 class="mb-0">${product.name}</h6>
+                            <small class="text-muted">₹${product.price.toFixed(2)}</small>
+                        </div>
+                    </div>
+                `;
+                
+                item.addEventListener('click', () => {
+                    window.location.href = `/product/${product.id}`;
+                });
+                
+                resultsContainer.appendChild(item);
+            });
+            
+            dropdown.style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Search error:', error);
+        });
+}
+
+// Keyboard navigation for dropdown
+document.getElementById('searchBox').addEventListener('keydown', function(e) {
+    const dropdown = document.getElementById('searchResults');
+    const items = document.querySelectorAll('.search-result-item');
+    
+    if (!dropdown || dropdown.style.display === 'none') return;
+    
+    // Down arrow
+    if (e.key === 'ArrowDown') {
+        currentFocus++;
+        setActive(items);
+    }
+    // Up arrow
+    else if (e.key === 'ArrowUp') {
+        currentFocus--;
+        setActive(items);
+    }
+    // Enter
+    else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (currentFocus > -1 && items[currentFocus]) {
+            items[currentFocus].click();
+        }
+    }
+});
+
+function setActive(items) {
+    if (!items) return;
+    
+    // Remove active class from all items
+    items.forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Set current item as active
+    if (currentFocus >= items.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = items.length - 1;
+    
+    if (items[currentFocus]) {
+        items[currentFocus].classList.add('active');
+        items[currentFocus].scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+        });
+    }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('searchResults');
+    const searchBox = document.getElementById('searchBox');
+    
+    // Only proceed if dropdown exists
+    if (!dropdown) return;
+    
+    // Check if click is outside dropdown and not on search box
+    if (!dropdown.contains(e.target) && e.target !== searchBox) {
+        dropdown.style.display = 'none';
+        currentFocus = -1;
+    }
+});
